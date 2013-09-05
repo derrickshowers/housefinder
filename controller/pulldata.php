@@ -4,7 +4,7 @@
 	date_default_timezone_set('America/New_York');
 	$townships = array(
 		"Montgomery_County" => array("Lower Merion Township"),
-		"Chester_County" => array("Tredyffrin Township"),
+		"Chester_County" => array("Tredyffrin Township","Willistown Township"),
 		"Delaware_County" => array("Radnor Township","Haverford Township")
 	);
 	$list = "";
@@ -34,7 +34,7 @@
 						$url = $row -> getElementsByTagName('a');
 						$price = ($cols -> item(4) -> nodeValue != "") ? $cols -> item(4) -> nodeValue : $cols -> item(5) -> nodeValue;
 						$priceInt = (int)str_replace(array("$",","),"",$price);
-						if (!$priceFilter || ($priceInt >= 300000 && $priceInt <= 400000)) {
+						if (!$priceFilter || ($priceInt >= 200000 && $priceInt <= 400000)) {
 							$list .= ($days == 0) ? "<tr class='success'>": "<tr>";
 							if ($days == 0) 
 								$list .= "<td>New Today!</td>";

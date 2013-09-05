@@ -31,7 +31,7 @@
 					<p id="daysText" class="pull-left">Showing Within Past <input id="days" class="input-small" name="days" type="text" value="<?php echo $daysSelected ?>" /> Days</p>
 					<div class="checkbox pull-right">
 						<label>
-							<input id="priceFilter" name="priceFilter" type="checkbox" <?php echo ($priceFilter) ? "checked" : ""; ?> /> Only show houses in our price range ($300,000 - $400,000)
+							<input id="priceFilter" name="priceFilter" type="checkbox" <?php echo ($priceFilter) ? "checked" : ""; ?> /> Only show houses in our price range ($200,00 - $400,000)
 						</label>
 					</div>
 				</form>
