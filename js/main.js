@@ -9,5 +9,22 @@ $(document).ready(function(){
 	$('#priceFilter').click(function() {
 		$(this).closest('form').submit();
 	});
+	
+	// AJAX call for reject form
+	$('.rejectForm').submit(function(e) {
+		e.preventDefault();
+		var form = this;
+		$.post('../controller/storedata.php', $(this).serialize())
+			.done(function() { 
+				$(form).closest('tr').prev('.detailsArea').addClass('error');
+				$(form).closest('tr').slideToggle('fast');
+			});
+	});
+	
+	// Show form
+	$('.detailsArea').click(function() {
+		$(this).next('.rejectArea').slideToggle('fast');
+		
+	});
 		
 });
