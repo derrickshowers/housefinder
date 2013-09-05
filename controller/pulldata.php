@@ -45,6 +45,7 @@
 						$address = $cols -> item(2) -> nodeValue;
 						$price = ($cols -> item(4) -> nodeValue != "") ? $cols -> item(4) -> nodeValue : $cols -> item(5) -> nodeValue;
 						$priceInt = (int)str_replace(array("$",","),"",$price);
+						$notes = getAddressNotes($address, $rejectedHouses);
 						
 						// Conditional for price filter
 						if (!$priceFilter || ($priceInt >= 200000 && $priceInt <= 400000)) {
@@ -74,7 +75,7 @@
 							
 							// Reject form
 							$list .= "<tr class='rejectArea'><td colspan='5'><form class='rejectForm'>";
-							$list .= "<input type='text' name='notes' />";
+							$list .= "<input type='text' name='notes' value='" . $notes . "' />";
 							$list .= "<input type='hidden' name='address' value='" . $address . "' />";
 							$list .= "<input type='submit' name='reject' value='reject' />";
 							$list .= "</form></td></tr>";
@@ -114,6 +115,16 @@
 		}
 		
 		return false;
+		
+	}
+	
+	function getAddressNotes ($address, $rejectedHouses) {
+		
+		foreach ($rejectedHouses as $rejectedHouse) {
+			if ($rejectedHouse['address'] == $address) return $rejectedHouse['notes'];
+		}
+		
+		return "";
 		
 	}
 
