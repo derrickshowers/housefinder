@@ -34,7 +34,7 @@
 				<h3 class="visible-xs">HOUSE FINDER</h3>
 				<div class="col-md-3 col-md-offset-1">
 					<form method="get">
-						<p id="daysText" class="pull-left">Showing Within Past <input id="days" class="input-sm" name="days" type="text" value="<?php echo $daysSelected ?>" /> Days</p>
+						<p id="daysText" class="pull-left">Showing Past <input id="days" class="input-sm" name="days" type="text" value="<?php echo $daysSelected ?>" /> Days</p>
 					</form>
 				</div>
 				<div class="col-md-3 col-md-offset-4">
