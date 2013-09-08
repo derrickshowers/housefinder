@@ -19,6 +19,12 @@
 	<link rel="stylesheet" href="css/main.css">
 	<link href="css/styles.css" rel="stylesheet" media="screen">
 	<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+	
+	<link rel="shortcut icon" href="favicon.ico?v=1.1">
+	<link rel="apple-touch-icon" href="apple-touch-57.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="apple-touch-72.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="apple-touch-114.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="apple-touch-144.png" />
 </head>
 <body>
 	<header>
