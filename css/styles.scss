@@ -18,3 +18,13 @@
 .hidden {
 	display: none;
 }
+
+/* Fix weird whitespace on mobile */
+html {
+	width: auto !important;
+	overflow-x: hidden !important;
+}
+body {
+	width: auto !important;
+	overflow-x: hidden !important;
+}

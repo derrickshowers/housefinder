@@ -79,9 +79,9 @@
 							$list .= "<td>" . $price . "</td>";
 							
 							// Options menu
-							$list .= "<td><div id='optionMenu" . $index . "' class='btn-group pull-right' data-address='" . $address . "' data-notes='" . $notes . "'><button type='button' class='btn btn-primary btn-xs dropdown-toggle' data-toggle='dropdown'><span class='glyphicon glyphicon-wrench'></span> <span class='caret'></span></button><ul class='dropdown-menu' role='menu' aria-labelledby='dropdown'>";
+							$list .= "<td><div id='optionMenu" . $index . "' class='btn-group pull-right' data-address='" . $address . "' data-notes='" . $notes . "'><button type='button' class='btn btn-primary btn-xs dropdown-toggle' data-toggle='dropdown'><span class='glyphicon glyphicon-wrench'></span> <span class='caret'></span></button><ul class='dropdown-menu' role='menu'>";
 							$list .= "<li role='presentation'><a role='menuitem' tabindex='-1' target='_blank' href='" . $url . "'>More Details</a></li>";
-							$list .= "<li role='presentation'><a role='menuitem' tabindex='-1' href='mailto:?body=Check out this one!  " . $url . "&subject=A House I Like'>Send Email</a></li>";
+							$list .= "<li role='presentation'><a role='menuitem' tabindex='-1' href='mailto:?body=Check%20out%20this%20one!%20%20" . $url . "&amp;subject=A%20House%20I%20Like'>Send Email</a></li>";
 							$list .= "<li" . ((isAddressRejected($address, $rejectedHouses)) ? "" : " class='hidden'") . " role='presentation'><a class='seeNotes' data-toggle='modal' role='menuitem' tabindex='-1' href='#modal_notes'>See Notes</a></li>";
 							$list .= "<li" . ((isAddressRejected($address, $rejectedHouses)) ? "" : " class='hidden'") . " role='presentation'><a class='removeRejected' role='menuitem' tabindex='-1' href='#'>I like it!</a></li>";
 							$list .= "<li" . ((isAddressRejected($address, $rejectedHouses)) ? " class='hidden'" : "") . " role='presentation'><a class='enterNotes' data-toggle='modal' role='menuitem' tabindex='-1' href='#modal_form'>Not For Us</a></li>";
