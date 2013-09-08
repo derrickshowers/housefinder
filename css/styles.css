@@ -1,4 +1,8 @@
-/* Misc Styles */
+/* Helper classes */
+.hidden {
+  display: none; }
+
+/* Header/Footer */
 header h1 {
   left: 50%;
   position: absolute;
@@ -10,12 +14,26 @@ header h3 {
   color: #FFF;
   text-align: center;
   margin: 5px 0; }
+header .row {
+  padding: 0 1%; }
 header .btn-group {
   margin: 12px 0; }
+header .btn-group ul li a {
+  z-index: 5000; }
 header #daysText {
   color: #FFF;
   margin: 9px 0; }
+header #daysText .popover {
+  color: #333; }
+header .navbar {
+  filter: none; }
 
+footer {
+  padding: 0 1%; }
+footer img {
+  max-width: 7%; }
+
+/* Misc Styles */
 #days {
   width: 25px;
   margin-top: 5px;
@@ -32,11 +50,32 @@ header #daysText {
   right: 0;
   left: initial; }
 
-.hidden {
-  display: none; }
+/* Error Messaging */
+#errorOverlay {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #333;
+  opacity: 0.7;
+  position: absolute;
+  z-index: 5000; }
 
-footer p {
-  line-height: 50px; }
+#noscriptError {
+  top: 25%;
+  left: 50%;
+  position: fixed;
+  z-index: 5001;
+  margin-left: -249px;
+  margin-top: -6px; }
+
+#ieError {
+  top: 25%;
+  left: 50%;
+  position: fixed;
+  z-index: 5001;
+  margin-left: -335px;
+  margin-top: -6px; }
 
 /* Fix weird whitespace on mobile */
 html {

@@ -21,9 +21,6 @@
 	<script src="js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
-	<!--[if lt IE 7]><p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p><![endif]-->
-	
-	
 	<header>
 		<div class="navbar navbar-inverse navbar-fixed-top bs-docs-nav">
 			<div class="row">
@@ -42,7 +39,7 @@
 						</button>
 						<ul class="dropdown-menu" role="menu">
 							<?php if ($priceFilter) : ?>
-								<li role="presentation"><a show="showPrice" role="menuitem" tabindex="-1" href="<?php echo '/' . (!empty($_GET['days']) ? '?days=' . $_GET['days'] . '&' : '?') . 'priceFilter=off'?>"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Show All (Price)</a></li>
+								<li role="presentation"><a id="showPrice" role="menuitem" tabindex="-1" href="<?php echo '/' . (!empty($_GET['days']) ? '?days=' . $_GET['days'] . '&' : '?') . 'priceFilter=off'?>"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Show All (Price)</a></li>
 							<?php else: ?>
 								<li role="presentation"><a id="hidePrice" role="menuitem" tabindex="-1" href="<?php echo '/' . (!empty($_GET['days']) ? '?days=' . $_GET['days'] : '?') . ''	?>"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Hide -200k, +400k</a></li>
 							<?php endif ?>
@@ -115,6 +112,20 @@
 			</div>
 		</div>
 	</div>
+	
+	<noscript>
+		<div id="noscriptError" class="alert alert-danger">
+			<p>You Need JavaScript turned on for this to work. What are you thinking?! :)</p>
+		</div>
+		<div id="noscriptOverlay"></div>
+	</noscript>
+	
+	<!--[if lt IE 9]>
+		<div id="ieError" class="alert alert-danger">
+			<p>You are using an outdated browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame.</p>
+		</div>
+		<div id="errorOverlay"></div>
+	<![endif]-->
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
