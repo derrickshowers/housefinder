@@ -3,14 +3,13 @@
 	include('config.php');
 	
 	// Redirect home if data not part of request
-	if (empty($_POST['address']) || empty($_POST['notes'])) {
+	if (empty($_POST['address'])) {
 		header("Location: /?msg=error");
 		exit;
 	}
 	
 	// Store important variables
 	$address = $_POST['address'];
-	$notes = addslashes($_POST['notes']);
 	
 	// Connect to database
 	$r = mysql_connect($db_host, $db_user, $db_pass);
@@ -22,7 +21,7 @@
 	}
 	
 	// Store it to the database abd close
-	$query = "INSERT INTO rejected (address, notes) VALUES ('$address', '$notes')";
+	$query = "DELETE FROM rejected WHERE address='$address'";
 	$retval = mysql_query($query, $r);
 	if (!$retval) {
 		die('Could not enter data: ' . mysql_error());

@@ -1,3 +1,6 @@
+# Ignore config file
+controller/config.php
+
 # SASS Stuff
 .sass-cache
 

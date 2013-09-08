@@ -14,6 +14,7 @@
 	$daysSelected = (empty($_GET['days'])) ? 5 : $_GET['days'];
 	$priceFilter = (empty($_GET['priceFilter'])) ? false : true;
 	$rejectedHouses = getRejectedAddresses();
+	$index = 0;
 
 	for ($days=0; $days < $daysSelected; $days++) {
 	
@@ -47,13 +48,18 @@
 						$priceInt = (int)str_replace(array("$",","),"",$price);
 						$notes = getAddressNotes($address, $rejectedHouses);
 						
+						
+						
 						// Conditional for price filter
 						if (!$priceFilter || ($priceInt >= 200000 && $priceInt <= 400000)) {
 											
+							// Increment index value
+							$index++;
+							
 							// Add class if new today and/or rejected
 							$list .= "<tr class='detailsArea";
 							if (isAddressRejected($address, $rejectedHouses))
-								$list .= " error'";
+								$list .= " danger hidden'";
 							else if ($days == 0)
 								$list .= " success'";
 							else
@@ -61,29 +67,31 @@
 							$list .= ">";
 							
 							// Build out details area
+							$list .= "<td class='hidden-xs'>";
 							if ($days == 0) 
-								$list .= "<td>New Today!</td>";
+								$list .= "New Today!</td>";
 							else if ($days == 1)
-								$list .= "<td>" . $days . " day ago</td>";
+								$list .= $days . " day ago</td>";
 							else
-								$list .= "<td>" . $days . " days ago</td>";
+								$list .= "" . $days . " days ago</td>";
 							$list .= "<td>" . $township . "</td>";
 							$list .= "<td>" . $address . "</td>";
 							$list .= "<td>" . $price . "</td>";
-							$list .= "<td><a target='_blank' href='" . $url . "'>Go</a></td>";
-							$list .= "</tr>";
 							
-							// Reject form
-							$list .= "<tr class='rejectArea'><td colspan='5'><form class='rejectForm'>";
-							$list .= "<input type='text' name='notes' value='" . $notes . "' />";
-							$list .= "<input type='hidden' name='address' value='" . $address . "' />";
-							$list .= "<input type='submit' name='reject' value='reject' />";
-							$list .= "</form></td></tr>";
+							// Options menu
+							$list .= "<td><div id='optionMenu" . $index . "' class='btn-group pull-right' data-address='" . $address . "' data-notes='" . $notes . "'><button type='button' class='btn btn-primary btn-xs dropdown-toggle' data-toggle='dropdown'><span class='glyphicon glyphicon-wrench'></span> <span class='caret'></span></button><ul class='dropdown-menu' role='menu' aria-labelledby='dropdown'>";
+							$list .= "<li role='presentation'><a role='menuitem' tabindex='-1' target='_blank' href='" . $url . "'>More Details</a></li>";
+							$list .= "<li role='presentation'><a role='menuitem' tabindex='-1' href='mailto:?body=Check out this one!  " . $url . "&subject=A House I Like'>Send Email</a></li>";
+							$list .= "<li" . ((isAddressRejected($address, $rejectedHouses)) ? "" : " class='hidden'") . " role='presentation'><a class='seeNotes' data-toggle='modal' role='menuitem' tabindex='-1' href='#modal_notes'>See Notes</a></li>";
+							$list .= "<li" . ((isAddressRejected($address, $rejectedHouses)) ? "" : " class='hidden'") . " role='presentation'><a class='removeRejected' role='menuitem' tabindex='-1' href='#'>I like it!</a></li>";
+							$list .= "<li" . ((isAddressRejected($address, $rejectedHouses)) ? " class='hidden'" : "") . " role='presentation'><a class='enterNotes' data-toggle='modal' role='menuitem' tabindex='-1' href='#modal_form'>Not For Us</a></li>";
+							$list .= "</ul></div></td></tr>";
 							
 						}
 					}
 				}		
 			}
+		
 		}	
 	}
 	
@@ -121,7 +129,7 @@
 	function getAddressNotes ($address, $rejectedHouses) {
 		
 		foreach ($rejectedHouses as $rejectedHouse) {
-			if ($rejectedHouse['address'] == $address) return $rejectedHouse['notes'];
+				if ($rejectedHouse['address'] == $address) return str_replace("'", "&#39;", $rejectedHouse['notes']);
 		}
 		
 		return "";
