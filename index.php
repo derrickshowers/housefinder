@@ -41,9 +41,9 @@
 								</button>
 								<ul class="dropdown-menu" role="menu">
 									<?php if ($priceFilter) : ?>
-										<li role="presentation"><a show="showPrice" role="menuitem" tabindex="-1" href="<?php echo '/' . (!empty($_GET['days']) ? '?days=' . $_GET['days'] : '?') . ''?>"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Show All (Price)</a></li>
+										<li role="presentation"><a show="showPrice" role="menuitem" tabindex="-1" href="<?php echo '/' . (!empty($_GET['days']) ? '?days=' . $_GET['days'] . '&' : '?') . 'priceFilter=off'?>"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Show All (Price)</a></li>
 									<?php else: ?>
-										<li role="presentation"><a id="hidePrice" role="menuitem" tabindex="-1" href="<?php echo '/' . (!empty($_GET['days']) ? '?days=' . $_GET['days'] . '&' : '?') . 'priceFilter=on'?>"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Hide -200k, +400k</a></li>
+										<li role="presentation"><a id="hidePrice" role="menuitem" tabindex="-1" href="<?php echo '/' . (!empty($_GET['days']) ? '?days=' . $_GET['days'] : '?') . ''	?>"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Hide -200k, +400k</a></li>
 									<?php endif ?>
 									<li role="presentation"><a class="hidden toggleRejected" id="hideRejected" role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Show Only Liked</a></li>
 									<li role="presentation"><a class="toggleRejected" id="showRejected" role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Show All (Liked/Disliked)</a></li>

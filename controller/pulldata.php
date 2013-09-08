@@ -12,7 +12,7 @@
 	$list = "";
 	$row = new DOMDocument();
 	$daysSelected = (empty($_GET['days'])) ? 5 : $_GET['days'];
-	$priceFilter = (empty($_GET['priceFilter'])) ? false : true;
+	$priceFilter = (empty($_GET['priceFilter'])) ? true : false;
 	$rejectedHouses = getRejectedAddresses();
 	$index = 0;
 
