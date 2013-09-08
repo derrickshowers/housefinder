@@ -1,4 +1,26 @@
 /* Misc Styles */
+header {
+	h1 {
+		left: 50%;
+		position: absolute;
+		text-align: center;
+		color: #FFF;
+		margin-top: 9px;
+		margin-left: -101px;
+	}
+	h3 {
+		color: #FFF;
+		text-align: center;
+		margin: 5px 0;
+	}
+	.btn-group {
+		margin: 12px 0;
+	}
+	#daysText {
+		color: #FFF;
+		margin: 9px 0;
+	}
+}
 #days {
 	width: 25px;
 	margin-top: 5px;
@@ -18,6 +40,11 @@
 .hidden {
 	display: none;
 }
+footer {
+	p {
+		line-height: 50px;
+	}
+}
 
 /* Fix weird whitespace on mobile */
 html {
@@ -27,4 +54,5 @@ html {
 body {
 	width: auto !important;
 	overflow-x: hidden !important;
+	margin-top: 110px;
 }

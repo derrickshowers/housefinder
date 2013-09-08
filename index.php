@@ -23,35 +23,40 @@
 <body>
 	<!--[if lt IE 7]><p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p><![endif]-->
 	
+	
+	<header>
+		<div class="navbar navbar-inverse navbar-fixed-top bs-docs-nav">
+			<div class="row">
+				<h1 class="hidden-xs">HOUSE FINDER</h1>
+				<h3 class="visible-xs">HOUSE FINDER</h3>
+				<div class="col-md-3 col-md-offset-1">
+					<form method="get">
+						<p id="daysText" class="pull-left">Showing Within Past <input id="days" class="input-sm" name="days" type="text" value="<?php echo $daysSelected ?>" /> Days</p>
+					</form>
+				</div>
+				<div class="col-md-3 col-md-offset-4">
+					<div class="btn-group pull-right">
+						<button type="button" class="btn btn-primary btn-s dropdown-toggle" data-toggle="dropdown">
+							View Options 
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<?php if ($priceFilter) : ?>
+								<li role="presentation"><a show="showPrice" role="menuitem" tabindex="-1" href="<?php echo '/' . (!empty($_GET['days']) ? '?days=' . $_GET['days'] . '&' : '?') . 'priceFilter=off'?>"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Show All (Price)</a></li>
+							<?php else: ?>
+								<li role="presentation"><a id="hidePrice" role="menuitem" tabindex="-1" href="<?php echo '/' . (!empty($_GET['days']) ? '?days=' . $_GET['days'] : '?') . ''	?>"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Hide -200k, +400k</a></li>
+							<?php endif ?>
+							<li role="presentation"><a class="hidden toggleRejected" id="hideRejected" role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Show Only Liked</a></li>
+							<li role="presentation"><a class="toggleRejected" id="showRejected" role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Show All (Liked/Disliked)</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
-			<header>
-				<h1>Newest Houses</h1>
-					<div class="row">
-						<div class="col-md-6">
-							<form method="get">
-								<p id="daysText" class="pull-left">Showing Within Past <input id="days" class="input-sm" name="days" type="text" value="<?php echo $daysSelected ?>" /> Days</p>
-							</form>
-						</div>
-						<div class="col-md-6">
-							<div class="btn-group pull-right">
-								<button type="button" class="btn btn-primary btn-s dropdown-toggle" data-toggle="dropdown">
-									View Options 
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" role="menu">
-									<?php if ($priceFilter) : ?>
-										<li role="presentation"><a show="showPrice" role="menuitem" tabindex="-1" href="<?php echo '/' . (!empty($_GET['days']) ? '?days=' . $_GET['days'] . '&' : '?') . 'priceFilter=off'?>"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Show All (Price)</a></li>
-									<?php else: ?>
-										<li role="presentation"><a id="hidePrice" role="menuitem" tabindex="-1" href="<?php echo '/' . (!empty($_GET['days']) ? '?days=' . $_GET['days'] : '?') . ''	?>"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Hide -200k, +400k</a></li>
-									<?php endif ?>
-									<li role="presentation"><a class="hidden toggleRejected" id="hideRejected" role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Show Only Liked</a></li>
-									<li role="presentation"><a class="toggleRejected" id="showRejected" role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Show All (Liked/Disliked)</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-			</header>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -67,6 +72,7 @@
 				</tbody>
 			</table>
 			<footer>
+				<a target="_blank" href="http://derrickshowers.com"><img class="pull-left" src="img/logo.png" /></a>
 				<p class="pull-right">
 					<small>Data provided by <a target="_blank" href="http://everyhome.com">http://everyhome.com</a></small>
 				</p>
