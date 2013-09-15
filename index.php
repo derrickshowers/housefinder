@@ -1,5 +1,5 @@
 <?php
-	include('controller/pulldata.php');
+	// include('controller/pulldata.php');
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +60,7 @@
 	
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
-			<table class="table table-hover">
+			<table class="table table-hover" id="listingsGrid">
 				<thead>
 					<tr>
 						<th class="hidden-xs">How New?</th>
@@ -71,7 +71,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php echo $list; ?>
+					<?php // echo $list; ?>
 				</tbody>
 			</table>
 			<footer>
