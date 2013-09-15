@@ -35,9 +35,9 @@
 	$townships = array(
 		"Montgomery_County" => "Lower Merion Township",
 		"Chester_County" => "Tredyffrin Township",
-		"Chester_County" => "Willistown Township",
+		"Chester_County2" => "Willistown Township",
 		"Delaware_County" => "Radnor Township",
-		"Delaware_County" => "Haverford Township",
+		"Delaware_County2" => "Haverford Township",
 	);
 	$json = '{"properties": [';
 	$listing = new DOMDocument();
@@ -52,6 +52,9 @@
 		$newDateMonth = $newDate -> format('F');
 		
 		foreach ($townships as $county => $township) {
+		
+			// This should be fixed at some point
+			$county = str_replace('2', '', $county);
 			
 			// Get file based on date and township
 			$filename = 'http://www.everyhome.com/Homes_For_Sale/Pennsylvania/'. $county .'/New_Listings/' . $newDateMonth . '_' . $newDateDay . '_2013.htm';
