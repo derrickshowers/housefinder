@@ -119,4 +119,5 @@ html {
 body {
   width: auto !important;
   overflow-x: hidden !important;
-  margin-top: 110px; }
+  margin-top: 110px;
+  min-height: 400px; }
