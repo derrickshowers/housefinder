@@ -9,3 +9,6 @@ controller/config.php
 
 # Ignore deploy script
 deploy
+
+$ Ignore cache
+cache
