@@ -1,5 +1,5 @@
 # Ignore config file
-controller/config.php
+config/config.php
 
 # SASS Stuff
 .sass-cache

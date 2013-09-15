@@ -1,6 +1,6 @@
 <?php
 
-	include('config.php');
+	include('../config/config.php');
 	
 	// Redirect home if data not part of request
 	if (empty($_POST['address'])) {
