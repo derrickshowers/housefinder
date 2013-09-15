@@ -1,6 +1,6 @@
 <?php
 
-	include('config.php');
+	include('../config/config.php');
 	
 	// Define Variables
 	date_default_timezone_set('America/New_York');

@@ -3,7 +3,7 @@
 	// Return json
 	header('Content-Type: application/json');
 	
-	include('config.php');
+	include('../config/config.php');
 	
 	global $db_host, $db_user, $db_pass;
 	$rejectedHouses = array();
