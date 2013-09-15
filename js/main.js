@@ -40,8 +40,7 @@ $(document).ready(function(){
 					class : 'btn-group pull-right',
 					id : 'optionMenu' + (index + 1),
 				});
-				$optionMenu.attr('data-toggle', 'dropdown')
-					.attr('data-address', listing.address)
+				$optionMenu.attr('data-address', listing.address)
 					.attr('data-notes', listing.notes);
 					
 				$optionMenu.append('<button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>&nbsp;<span class="caret"></span></button>');	
@@ -172,4 +171,5 @@ function addListeners () {
 			
 		$(this).addClass('hidden');		
 	});
+	
 }
