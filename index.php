@@ -34,7 +34,7 @@
 				<h3 class="visible-xs">HOUSE FINDER</h3>
 				<div class="col-md-3 col-md-offset-1">
 					<form method="get">
-						<p id="daysText" class="pull-left">Showing Past <input id="days" class="input-sm" name="days" type="text" value="<?php echo $daysSelected ?>" /> Days</p>
+						<p id="daysText" class="pull-left">Showing Past <input id="days" class="input-sm" name="days" type="text" value="<?php echo (empty($_GET['days'])) ? 5 : $_GET['days'] ?>" /> Days</p>
 					</form>
 				</div>
 				<div class="col-md-3 col-md-offset-4">
@@ -44,11 +44,6 @@
 							<span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu" role="menu">
-							<?php if ($priceFilter) : ?>
-								<li role="presentation"><a id="showPrice" role="menuitem" tabindex="-1" href="<?php echo '/' . (!empty($_GET['days']) ? '?days=' . $_GET['days'] . '&' : '?') . 'priceFilter=off'?>"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Show All (Price)</a></li>
-							<?php else: ?>
-								<li role="presentation"><a id="hidePrice" role="menuitem" tabindex="-1" href="<?php echo '/' . (!empty($_GET['days']) ? '?days=' . $_GET['days'] : '?') . ''	?>"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Hide -200k, +400k</a></li>
-							<?php endif ?>
 							<li role="presentation"><a class="hidden toggleRejected" id="hideRejected" role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Show Only Liked</a></li>
 							<li role="presentation"><a class="toggleRejected" id="showRejected" role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Show All (Liked/Disliked)</a></li>
 						</ul>
@@ -66,13 +61,10 @@
 						<th class="hidden-xs">How New?</th>
 						<th>Township</th>
 						<th>Address</th>
-						<th>Listing Price</th>
+						<th><small><a id="showAllPrice" href="javascript:void(0)">Show All</a></small><br />Listing Price</th>
 						<th><span class="pull-right">Options</span></th>
 					</tr>
 				</thead>
-				<tbody>
-					<?php // echo $list; ?>
-				</tbody>
 			</table>
 			<footer>
 				<a target="_blank" href="http://derrickshowers.com"><img class="pull-left" src="img/logo.png" /></a>
@@ -87,12 +79,13 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					Why Not? (Notes)
+					Add Some Notes
 				</div>
 				<div class="modal-body">
-					<form class="rejectForm">
+					<form class="notesForm">
 					<textarea id="notes" class="form-control" name="notes" rows="3"></textarea>
 					<input type="hidden" id="address" name="address" value="none" />
+					<input type="hidden" id="rejected" name="rejected" value="Y" />
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary" >Save changes</button>
@@ -123,7 +116,7 @@
 		<div id="noscriptError" class="alert alert-danger">
 			<p>You Need JavaScript turned on for this to work. What are you thinking?! :)</p>
 		</div>
-		<div id="noscriptOverlay"></div>
+		<div id="errorOverlay"></div>
 	</noscript>
 	
 	<!--[if lt IE 9]>
