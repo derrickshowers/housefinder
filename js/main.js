@@ -64,11 +64,11 @@ var housefinder = {
 						// Make the row
 						var $row = $('<tr class="detailsArea">');
 						if (listing.age == 0)
-							$row.append('<td>New Today!</td>');
+							$row.append('<td class="hidden-xs">New Today!</td>');
 						else if (listing.age == 1)
-							$row.append('<td>' + listing.age + ' Day</td>');
+							$row.append('<td class="hidden-xs">' + listing.age + ' Day</td>');
 						else
-							$row.append('<td>' + listing.age + ' Days</td>');
+							$row.append('<td class="hidden-xs">' + listing.age + ' Days</td>');
 						$row.append('<td>' + listing.township + '</td>');
 						$row.append('<td>' + listing.address + '</td>');
 						$row.append('<td>' + listing.price + '</td>');
