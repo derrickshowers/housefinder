@@ -50,6 +50,40 @@ footer img {
   right: 0;
   left: initial; }
 
+.priceOutOfRange {
+  display: none; }
+
+.listingRejected {
+  display: none; }
+
+tbody > tr.listingRejected > td {
+  background-color: #f2dede;
+  border-color: #eed3d7; }
+
+tbody > tr.listingRejected:hover > td {
+  background-color: #ebcccc;
+  border-color: #e6c1c7; }
+
+#loading {
+  top: 40%;
+  left: 50%;
+  height: 180px;
+  width: 300px;
+  position: absolute;
+  margin-left: -150px;
+  margin-top: -90px;
+  background: #333;
+  border-radius: 10px;
+  border: 5px solid #428bca;
+  color: #FFF;
+  text-align: center;
+  padding: 16px;
+  opacity: .9; }
+
+#loading img {
+  max-width: 50px;
+  padding-bottom: 30px; }
+
 /* Error Messaging */
 #errorOverlay {
   top: 0;

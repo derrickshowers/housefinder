@@ -8,10 +8,14 @@
 	// Return json
 	header('Content-Type: application/json');
 	
-	// See if json is available
+	// Define a few necessary variables here
 	$cacheFile = '../cache/listings.json';
+	$daysSelected = (empty($_GET['days'])) ? 5 : $_GET['days'];
+	$todayDate = date("d", time() - (3600 * 8));
+	$fileDate = date("d", filectime($cacheFile)  - (3600 * 8));
 	
-	if (file_exists($cacheFile) && date("U",filectime($cacheFile) >= time() - 3600)) {
+	// Decide whether or not to get the cached version
+	if (file_exists($cacheFile) && date("U",filectime($cacheFile) >= time() - 36000) && $daysSelected <= 5 && $todayDate == $fileDate) {
 		
 		// Get file contents
 		$fh = fopen($cacheFile, 'r');
@@ -36,18 +40,16 @@
 		"Delaware_County" => "Haverford Township",
 	);
 	$json = '{"properties": [';
-	$list = "";
 	$listing = new DOMDocument();
-	$daysSelected = (empty($_GET['days'])) ? 5 : $_GET['days'];
 	$index = 0;
 
 	for ($days=0; $days < $daysSelected; $days++) {
 	
 		$currentDate = new DateTime();
 		$currentDate -> modify('-8 hour');
-		$currentDate -> modify('-' . $days . ' day');
-		$newDateDay = (int)$currentDate -> format('d');
-		$newDateMonth = $currentDate -> format('F');
+		$newDate = $currentDate -> modify('-' . $days . ' day');
+		$newDateDay = (int)$newDate -> format('d');
+		$newDateMonth = $newDate -> format('F');
 		
 		foreach ($townships as $county => $township) {
 			
