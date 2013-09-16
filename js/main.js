@@ -70,7 +70,7 @@ var housefinder = {
 						else
 							$row.append('<td class="hidden-xs">' + listing.age + ' Days</td>');
 						$row.append('<td>' + listing.township + '</td>');
-						$row.append('<td>' + listing.address + '</td>');
+						$row.append('<td><a target="_blank" href="http://maps.google.com/?q=' + listing.address + ',' + listing.township + ',PA">' + listing.address + '</a></td>');
 						$row.append('<td>' + listing.price + '</td>');
 						
 						// Filter by price
@@ -153,11 +153,13 @@ var housefinder = {
 			e.preventDefault();
 			var address = $(this).closest('.btn-group').attr('data-address');
 			var id = ($(this).closest('.btn-group').attr('id')).split('optionMenu')[1];
-			$.post('../controller/deletedata.php', { address: address})
+			$.post('../controller/deletedata.php', { address: address })
 				.done(function() { 
-					var highlightId = '#optionMenu' + id;
-					$(highlightId).closest('.detailsArea').removeClass('listingRejected');
-					housefinder.readjustMenu(id, 'accepted');
+					var menu = '#optionMenu' + id;
+					$(menu).closest('.detailsArea').removeClass('listingRejected');
+					$(menu).attr('data-menuConfig','notes');
+					$(menu).attr('data-notes','');
+					housefinder.readjustMenu(id);
 				});
 		});
 		
@@ -182,27 +184,90 @@ var housefinder = {
 		
 	},
 	
-	readjustMenu : function(index, state) {
+	/**
+	/* This function is called whenever the menu needs readjusted
+	/* Configuration Options
+	/* The menu changes state based on what options are selected. Since
+	/* a lot of it is AJAX, the menu needs to be updated on the fly. 
+	/* The menu's <ul> contains a data attrib to help keep this all straight.
+	/* Data attribute is called data-menuConfig. Below are a list of 
+	/* configurations. The format is: Config Name - Data Attribute - Options
+	/*
+	/* Normal - normal/none - More Details, Send Email, Add Notes, Not For Us
+	/* Rejected - rejected - More Details, Send Email, See Notes, I Like It
+	/* Contains Notes - notes - More Details, Send Email, Edit Notes, I Like It
+	**/
+	readjustMenu : function(index) {
 	
-		var menuUL = '#optionMenu' + index + ' ul';
+		var menu = '#optionMenu' + index;
+		var config = $(menu).attr('data-menuConfig');
+		var notes = $(menu).attr('data-notes');
+		var optionHidden;
 		
-		$(menuUL).children('li').each(function() {
+		if (config == 'rejected')
+			optionHidden = [false,false,false,true,false,true];
+		else if (config == 'notes')
+			optionHidden = [false,false,false,false,true,false];
+		else
+			optionHidden = [false,false,true,false,true,false];
+		
+		$(menu + ' ul').children('li').each(function(i) {
+		
+			// Need this to compare the text of the menu with what's note notes
+			var menuText = $(this).children('a').text();
 			
-			if (state == 'rejected') {
-				if ($(this).children('a').text() == 'Not For Us')
-					$(this).addClass('hidden');
+			// First, lets decide what categories to show
+			if (optionHidden[i] == true) $(this).addClass('hidden');
+			else $(this).removeClass('hidden');
+			
+			// Add or edit notes?
+			if (menuText == 'Add Notes' || menuText == 'Edit Notes') {
+				if (notes != "" && notes != undefined)
+					$(this).children('a').text('Edit Notes')
 				else
-					$(this).removeClass('hidden');
-			} else {
-				if ($(this).children('a').text() == 'See Notes' || $(this).children('a').text() == 'I like it!')
-					$(this).addClass('hidden');
-				else
-					$(this).removeClass('hidden');
+					$(this).children('a').text('Add Notes')
 			}
 		});
 
 	},
 	
+	/**
+	/* AJAX the notes form
+	**/
+	notesForm : function() {
+		
+		$('.notesForm').submit(function(e) {
+			
+			e.preventDefault();
+			
+			// Get the id so we know what to update when done
+			var id = $(this).data('id');
+			
+			// Lets submit the form and update the view
+			$.post('../controller/storedata.php', $(this).serialize())
+				.done(function() { 
+					var menu = '#optionMenu' + id;
+					$(menu).attr('data-notes',$('#notes').val());
+					$('#notes').val('');
+					$('.modal').modal('hide');
+					if ($('#rejected').val() == 'Y') {
+						$(menu).closest('.detailsArea').addClass('listingRejected');
+						$(menu).attr('data-menuConfig','rejected');
+					}
+					else
+						$(menu).attr('data-menuConfig','notes');
+					housefinder.readjustMenu(id);
+				})
+				.fail(function() {
+					alert("something went wrong");
+				})
+		});
+		
+	},
+	
+	/**
+	/* This function is for the price toggle (show all/show filtered)
+	**/
 	togglePrice : function(el) {
 		
 		if (housefinder.settings.priceView == 'all') {
@@ -217,27 +282,9 @@ var housefinder = {
 		
 	},
 	
-	notesForm : function() {
-		$('.notesForm').submit(function(e) {
-			e.preventDefault();
-			var form = this;
-			$.post('../controller/storedata.php', $(this).serialize())
-				.done(function() { 
-					var highlightId = '#optionMenu' + $(form).data('id');
-					$(highlightId).attr('data-notes',$('#notes').val());
-					$('#notes').val('');
-					$('.modal').modal('hide');
-					if ($('#rejected').val() == 'Y') {
-						$(highlightId).closest('.detailsArea').addClass('listingRejected');
-						housefinder.readjustMenu($(form).data('id'), 'rejected');
-					}
-				})
-				.fail(function() {
-					alert("something went wrong");
-				})
-		});
-	},
-	
+	/**
+	/* Just a simple function to add a loading spinner to the page
+	**/
 	ajaxSpinner : function() {
 		
 		var loadingDiv = $('<div>', {
