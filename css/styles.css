@@ -9,29 +9,29 @@ header h1 {
   text-align: center;
   color: #FFF;
   margin-top: 9px;
-  margin-left: -101px; }
+  margin-left: -133px; }
 header h3 {
   color: #FFF;
   text-align: center;
   margin: 5px 0; }
 header .row {
   padding: 0 1%; }
-header .btn-group {
+header button {
   margin: 12px 0; }
-header .btn-group ul li a {
-  z-index: 5000; }
+  header button ul li a {
+    z-index: 5000; }
 header #daysText {
   color: #FFF;
   margin: 9px 0; }
-header #daysText .popover {
-  color: #333; }
+  header #daysText .popover {
+    color: #333; }
 header .navbar {
   filter: none; }
 
 footer {
   padding: 0 1%; }
-footer img {
-  max-width: 7%; }
+  footer img {
+    max-width: 7%; }
 
 /* Misc Styles */
 #days {

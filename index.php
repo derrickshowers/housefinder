@@ -1,5 +1,7 @@
 <?php
-	// include('controller/pulldata.php');
+	// Check for session
+	session_start();
+	$activeSession = (isset($_SESSION['firstname']) && $_SESSION['firstname'] != "") ? true : false;
 ?>
 
 <!DOCTYPE html>
@@ -38,15 +40,23 @@
 					</form>
 				</div>
 				<div class="col-md-3 col-md-offset-4">
-					<div class="btn-group pull-right">
-						<button type="button" class="btn btn-primary btn-s dropdown-toggle" data-toggle="dropdown">
-							View Options 
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li role="presentation"><a class="hidden toggleRejected" id="hideRejected" role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Show Only Liked</a></li>
-							<li role="presentation"><a class="toggleRejected" id="showRejected" role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Show All (Liked/Disliked)</a></li>
-						</ul>
+					<div class="pull-right">
+						<?php if ($activeSession) : ?>
+							<button onclick="location.href='controller/logout.php'" type="button" class="btn btn-primary btn-s">Logout</button>
+						<?php else : ?>
+							<button type="button" class="btn btn-primary btn-s" data-toggle="modal" data-target="#modal_login">Login</button>
+						<?php endif ?>
+						<div class="btn-group">
+							<button type="button" class="btn btn-primary btn-s dropdown-toggle" data-toggle="dropdown">
+								Options 
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li role="presentation"><a class="hidden toggleRejected" id="hideRejected" role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Show Only Liked</a></li>
+								<li role="presentation"><a class="toggleRejected" id="showRejected" role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Show All (Liked/Disliked)</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="controller/csv.php"><span class="glyphicon glyphicon-save"></span>&nbsp;&nbsp;Download Shortlist</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -55,6 +65,9 @@
 	
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
+			<?php if (isset($_GET['msg']) && $_GET['msg'] == 'loginNeeded') echo '<div class="alert alert-danger">Login is necessary. Please <a href="#" data-toggle="modal" data-target="#modal_login">login</a>.</div>'; ?>
+			<?php if (isset($_GET['msg']) && $_GET['msg'] == 'loginFailed') echo '<div class="alert alert-danger">Login information incorrect. Please <a href="#" data-toggle="modal" data-target="#modal_login">try again</a>.</div>'; ?>
+			<?php if (isset($_GET['msg']) && $_GET['msg'] == 'loginSuccess' && isset($_SESSION['firstname'])) echo '<div class="alert alert-success">Successfully logged in as ' . $_SESSION['firstname']. '!</div>'; ?>
 			<table class="table table-hover" id="listingsGrid">
 				<thead>
 					<tr>
@@ -84,6 +97,9 @@
 				<div class="modal-body">
 					<form class="notesForm">
 					<textarea id="notes" class="form-control" name="notes" rows="3"></textarea>
+					<div id="shortlist" class="checkbox">
+						<input name="shortlist" type="checkbox">Shortlist
+					</div>
 					<input type="hidden" id="address" name="address" value="none" />
 					<input type="hidden" id="rejected" name="rejected" value="Y" />
 				</div>
@@ -101,6 +117,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					Notes
+					<span id="shortlistBadge" class="label label-success">Shortlisted</span>
 				</div>
 				<div class="modal-body">
 					<p id="rejectNotes"></p>
@@ -111,6 +128,34 @@
 			</div>
 		</div>
 	</div>
+	
+	<?php if (!$activeSession) : ?>
+	<div id="modal_login" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					Login
+				</div>
+				<form role="form" method="post" action="controller/login.php">
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="username">Username:</label>
+							<input id="username" name="username" type="text" />
+						</div>
+						<div class="form-group">
+							<label for="password">Password:</label>
+							<input id="password" name="password" type="password" />
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-default">Login</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<?php endif ?>
 	
 	<noscript>
 		<div id="noscriptError" class="alert alert-danger">
