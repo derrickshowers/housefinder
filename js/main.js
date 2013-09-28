@@ -52,11 +52,13 @@ var housefinder = {
 					if (parseInt(listing.age) < housefinder.settings.maxDays) {
 					
 						listing.rejected = 'N';
+						listing.shortlisted = 'N';
 					
 						$.each(userData, function(index, val) {
 							if (val.address == listing.address) {
 								listing.notes = val.notes;
 								listing.rejected = val.rejected;
+								listing.shortlisted = val.shortlisted;
 							}
 							
 						});
@@ -89,7 +91,8 @@ var housefinder = {
 							id : 'optionMenu' + (index + 1),
 						});
 						$optionMenu.attr('data-address', listing.address)
-							.attr('data-notes', listing.notes);
+							.attr('data-notes', listing.notes)
+							.attr('data-shortlisted', listing.shortlisted);
 							
 						$optionMenu.append('<button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>&nbsp;<span class="caret"></span></button>');	
 						$dropdown = $('<ul>', {
@@ -132,11 +135,19 @@ var housefinder = {
 		$('.enterNotes').click(function() {
 			var address = $(this).closest('.btn-group').attr('data-address');
 			var notes = $(this).closest('.btn-group').attr('data-notes');
+			var shortlisted = $(this).closest('.btn-group').attr('data-shortlisted');
 			var id = ($(this).closest('.btn-group').attr('id')).split('optionMenu')[1];
 			$('#notes').val(notes);
 			$('.notesForm').data('id', id);
 			$('#address').val(address);
-			(this.className.indexOf('reject') > -1) ? $('#rejected').val('Y') : $('#rejected').val('N');
+			(shortlisted == 'Y') ? $('#shortlist input').prop('checked', true) : $('#shortlist input').prop('checked', false);
+			if (this.className.indexOf('reject') > -1) {
+				$('#shortlist').hide();
+				$('#rejected').val('Y')
+			} else {
+				$('#shortlist').show();
+				$('#rejected').val('N');
+			}
 			setTimeout(function() {
 				$('#notes').focus();
 			}, 500);
@@ -145,7 +156,9 @@ var housefinder = {
 		// Add notes to modal content area
 		$('.seeNotes').click(function() {
 			var notes = $(this).closest('.btn-group').attr('data-notes');
+			var shortlisted = $(this).closest('.btn-group').attr('data-shortlisted');
 			$('#rejectNotes').text(notes);
+			(shortlisted == 'Y') ? $('#shortlistBadge').show() : $('#shortlistBadge').hide();
 		});
 		
 		// Add notes to modal content area
@@ -245,18 +258,24 @@ var housefinder = {
 			
 			// Lets submit the form and update the view
 			$.post('../controller/storedata.php', $(this).serialize())
-				.done(function() { 
-					var menu = '#optionMenu' + id;
-					$(menu).attr('data-notes',$('#notes').val());
-					$('#notes').val('');
-					$('.modal').modal('hide');
-					if ($('#rejected').val() == 'Y') {
-						$(menu).closest('.detailsArea').addClass('listingRejected');
-						$(menu).attr('data-menuConfig','rejected');
+				.done(function(data) {
+				
+					if (data == 'Login Needed') {
+						location.href = '/?msg=loginNeeded';
+					} else {
+						var menu = '#optionMenu' + id;
+						$(menu).attr('data-notes',$('#notes').val());
+						$(menu).attr('data-shortlisted',($('#shortlist input').prop('checked') ? 'Y' : 'N'));
+						$('#notes').val('');
+						$('.modal').modal('hide');
+						if ($('#rejected').val() == 'Y') {
+							$(menu).closest('.detailsArea').addClass('listingRejected');
+							$(menu).attr('data-menuConfig','rejected');
+						}
+						else
+							$(menu).attr('data-menuConfig','notes');
+						housefinder.readjustMenu(id);
 					}
-					else
-						$(menu).attr('data-menuConfig','notes');
-					housefinder.readjustMenu(id);
 				})
 				.fail(function() {
 					alert("something went wrong");

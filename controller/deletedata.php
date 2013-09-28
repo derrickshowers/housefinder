@@ -1,10 +1,15 @@
 <?php
 
 	include('../config/config.php');
+	session_start();
 	
 	// Redirect home if data not part of request
 	if (empty($_POST['address'])) {
 		header("Location: /?msg=error");
+		exit;
+	}
+	else if (!isset($_SESSION['firstname'])) {
+		echo "Login Needed";
 		exit;
 	}
 	
@@ -21,7 +26,7 @@
 	}
 	
 	// Store it to the database abd close
-	$query = "DELETE FROM rejected WHERE address='$address'";
+	$query = "DELETE FROM houses WHERE address='$address'";
 	$retval = mysql_query($query, $r);
 	if (!$retval) {
 		die('Could not enter data: ' . mysql_error());

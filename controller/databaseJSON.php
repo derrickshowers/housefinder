@@ -12,7 +12,7 @@
 	$r = mysql_connect($db_host, $db_user, $db_pass);
 	mysql_select_db('housefinder');
 	
-	$query = "SELECT * FROM rejected";
+	$query = "SELECT * FROM houses";
 	$retval = mysql_query($query, $r);
 	
 	while ($row_user = mysql_fetch_assoc($retval))
