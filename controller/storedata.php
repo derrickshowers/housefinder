@@ -20,7 +20,7 @@
 	$shortlisted = (isset($_POST['shortlist'])) ? 'Y' : 'N';
 	
 	// Make sure shortlisted houses aren't rejected
-	if ($shortlisted) $rejected = 'N';
+	if ($shortlisted == 'Y') $rejected = 'N';
 	
 	// Connect to database
 	$r = mysql_connect($db_host, $db_user, $db_pass);
