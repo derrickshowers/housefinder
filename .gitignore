@@ -1,5 +1,5 @@
 # Ignore config file
-config/config.php
+config.php
 
 # SASS Stuff
 .sass-cache
